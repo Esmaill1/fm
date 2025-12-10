@@ -6,6 +6,7 @@ const backgrounds = [
     'https://storage.ko-fi.com/cdn/useruploads/display/f9d344fe-3715-41b8-8996-6d844cac422b_scrivaniapreview.gif',
     'http://i.imgur.com/MDYkP0A.gif',
     'https://i.pinimg.com/originals/0b/1d/fc/0b1dfc8ebe6f365f4208cb0cff5c46c9.gif',
+    'https://i.pinimg.com/originals/1c/98/33/1c983310d3e6765916c63294e4b99de4.gif',
     'cozy-home-interior-anime-style.jpg',
     'wp11702872-cozy-lofi-wallpapers.jpg'
 ];
