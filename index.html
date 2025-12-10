@@ -34,10 +34,12 @@
             </div>
 
             <div class="volume-control">
-                <svg class="volume-icon" id="volumeIcon" viewBox="0 0 24 24">
-                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
-                </svg>
-                <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="80">
+                <button class="volume-icon" id="volumeIcon" aria-label="تبديل الصوت" type="button">
+                    <svg viewBox="0 0 24 24" role="presentation">
+                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+                    </svg>
+                </button>
+                <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="80" aria-label="مستوى الصوت">
             </div>
         </div>
     </div>

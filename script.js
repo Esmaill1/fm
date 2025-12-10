@@ -12,11 +12,22 @@ const backgrounds = [
     'wp11702872-cozy-lofi-wallpapers.jpg'
 ];
 
-// Only set random background on desktop
-if (window.innerWidth > 768) {
-    const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
-    document.body.style.backgroundImage = `url('${randomBg}')`;
+// Function to set background with error handling
+function setBackground() {
+    if (window.innerWidth > 768) {
+        const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+        document.body.style.backgroundImage = `url('${randomBg}')`;
+    }
 }
+
+// Set background on load
+setBackground();
+
+// Handle window resize for responsive background
+window.addEventListener('resize', () => {
+    setBackground();
+});
+
 // Mobile uses the GIF set in HTML inline style
 
 const audio = document.getElementById('audioPlayer');
@@ -27,24 +38,43 @@ const statusDot = document.getElementById('statusDot');
 const statusText = document.getElementById('statusText');
 
 let isPlaying = false;
+let playTimeout = null;
 
-// Play/Pause toggle
+// Play/Pause toggle with timeout and loading state
 playBtn.addEventListener('click', () => {
     if (isPlaying) {
         audio.pause();
-        playBtn.classList.remove('playing');
+        playBtn.classList.remove('playing', 'loading');
+        if (playTimeout) clearTimeout(playTimeout);
         statusText.textContent = 'متوقف';
         statusDot.classList.add('offline');
         isPlaying = false;
     } else {
+        playBtn.classList.add('loading');
         statusText.textContent = 'جاري الاتصال...';
+        
+        // 5 second timeout for connection attempt
+        playTimeout = setTimeout(() => {
+            if (isPlaying === false) {
+                statusText.textContent = 'فشل الاتصال - حاول مرة أخرى';
+                playBtn.classList.remove('loading');
+                statusDot.classList.add('offline');
+                audio.pause();
+            }
+        }, 5000);
+
         audio.play().then(() => {
+            if (playTimeout) clearTimeout(playTimeout);
+            playBtn.classList.remove('loading');
             playBtn.classList.add('playing');
             statusText.textContent = 'يعمل الآن';
             statusDot.classList.remove('offline');
             isPlaying = true;
         }).catch(err => {
+            if (playTimeout) clearTimeout(playTimeout);
+            playBtn.classList.remove('loading');
             statusText.textContent = 'خطأ - حاول مرة أخرى';
+            statusDot.classList.add('offline');
             console.error('Playback error:', err);
         });
     }
@@ -57,7 +87,7 @@ volumeSlider.addEventListener('input', (e) => {
     updateVolumeIcon(volume);
 });
 
-// Volume icon click to mute/unmute
+// Volume icon click to mute/unmute with better styling
 let previousVolume = 0.8;
 volumeIcon.addEventListener('click', () => {
     if (audio.volume > 0) {
@@ -69,6 +99,14 @@ volumeIcon.addEventListener('click', () => {
         volumeSlider.value = previousVolume * 100;
     }
     updateVolumeIcon(audio.volume);
+});
+
+// Keyboard support - Space to play/pause
+document.addEventListener('keydown', (e) => {
+    if (e.code === 'Space' && e.target === document.body) {
+        e.preventDefault();
+        playBtn.click();
+    }
 });
 
 function updateVolumeIcon(volume) {
