@@ -5,6 +5,7 @@ const backgrounds = [
     'https://images.squarespace-cdn.com/content/v1/5fe4caeadae61a2f19719512/fbabc357-b945-4e72-8881-b94e68522174/Cozy+Home+Office?format=2500w',
     'https://storage.ko-fi.com/cdn/useruploads/display/f9d344fe-3715-41b8-8996-6d844cac422b_scrivaniapreview.gif',
     'http://i.imgur.com/MDYkP0A.gif',
+    'https://i.pinimg.com/originals/0b/1d/fc/0b1dfc8ebe6f365f4208cb0cff5c46c9.gif',
     'cozy-home-interior-anime-style.jpg',
     'wp11702872-cozy-lofi-wallpapers.jpg'
 ];
