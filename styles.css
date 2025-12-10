@@ -252,8 +252,16 @@ body::before {
 
 /* Mobile improvements */
 @media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
     .player-card {
         padding: 30px 20px;
+    }
+
+    .logo h1 {
+        font-size: 1.4rem;
     }
 
     .play-btn {
@@ -278,5 +286,76 @@ body::before {
     .volume-slider::-moz-range-thumb {
         width: 16px;
         height: 16px;
+    }
+}
+
+/* Extra small phones (< 400px) */
+@media (max-width: 400px) {
+    .container {
+        padding: 10px;
+        max-width: 95vw;
+    }
+
+    .player-card {
+        padding: 20px 15px;
+        border-radius: 16px;
+    }
+
+    .logo h1 {
+        font-size: 1.3rem;
+    }
+
+    .logo span {
+        font-size: 0.65rem;
+    }
+
+    .status-indicator {
+        font-size: 0.7rem;
+        padding: 4px 10px;
+        gap: 4px;
+    }
+
+    .status-dot {
+        width: 5px;
+        height: 5px;
+    }
+
+    .controls {
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .play-btn {
+        width: 65px;
+        height: 65px;
+    }
+
+    .play-btn svg {
+        width: 26px;
+        height: 26px;
+    }
+
+    .volume-control {
+        gap: 8px;
+    }
+
+    .volume-icon {
+        width: 16px;
+        height: 16px;
+        padding: 2px;
+    }
+
+    .volume-slider {
+        height: 5px;
+    }
+
+    .volume-slider::-webkit-slider-thumb {
+        width: 14px;
+        height: 14px;
+    }
+
+    .volume-slider::-moz-range-thumb {
+        width: 14px;
+        height: 14px;
     }
 }
