@@ -4,6 +4,7 @@ const backgrounds = [
     'https://i.pinimg.com/1200x/36/19/09/36190987c6cd3c29ec4f1ac202decbf1.jpg',
     'https://images.squarespace-cdn.com/content/v1/5fe4caeadae61a2f19719512/fbabc357-b945-4e72-8881-b94e68522174/Cozy+Home+Office?format=2500w',
     'http://i.imgur.com/MDYkP0A.gif',
+    'https://i.pinimg.com/originals/d8/82/8d/d8828d2d6254273a617e6337d292303d.gif',
     'https://i.pinimg.com/originals/9f/42/2b/9f422b3823bc356e0e801f2504452c4c.gif',
     'https://i.pinimg.com/originals/a7/1c/ed/a71ced878e41e9296321504f39e1389f.gif',
     'https://i.pinimg.com/originals/1c/98/33/1c983310d3e6765916c63294e4b99de4.gif',
