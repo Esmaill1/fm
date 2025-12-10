@@ -1,4 +1,4 @@
-// Random background on load
+// Random background on load (desktop only)
 const backgrounds = [
     'https://i.pinimg.com/originals/18/83/de/1883de5bfee36b043b973bef00c561e0.gif',
     'https://i.pinimg.com/1200x/36/19/09/36190987c6cd3c29ec4f1ac202decbf1.jpg',
@@ -11,8 +11,13 @@ const backgrounds = [
     'cozy-home-interior-anime-style.jpg',
     'wp11702872-cozy-lofi-wallpapers.jpg'
 ];
-const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
-document.body.style.backgroundImage = `url('${randomBg}')`;
+
+// Only set random background on desktop
+if (window.innerWidth > 768) {
+    const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+    document.body.style.backgroundImage = `url('${randomBg}')`;
+}
+// Mobile uses the GIF set in HTML inline style
 
 const audio = document.getElementById('audioPlayer');
 const playBtn = document.getElementById('playBtn');
