@@ -278,6 +278,216 @@ body::before {
   font-weight: 600;
 }
 
+/* Set Timer Button */
+.set-timer-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 12px auto 0;
+  padding: 2px 6px;
+  background: transparent;
+  border: 1px solid rgba(255, 180, 120, 0.3);
+  border-radius: 6px;
+  color: rgba(255, 220, 180, 0.85);
+  font-size: 0.75rem;
+  font-family: "Cairo", sans-serif;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.set-timer-btn:hover {
+  border-color: #ffb347;
+  color: #ffb347;
+}
+
+.set-timer-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.timer-badge {
+  font-weight: 600;
+  color: #ffb347;
+}
+
+.timer-badge:empty {
+  display: none;
+}
+
+/* Timer Modal */
+.timer-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.timer-modal-content {
+  background: rgba(20, 15, 10, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 180, 120, 0.2);
+  border-radius: 16px;
+  width: 90%;
+  max-width: 280px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  animation: slideUp 0.3s ease;
+  direction: rtl;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.timer-modal-header {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255, 180, 120, 0.1);
+}
+
+.timer-modal-header h3 {
+  color: rgba(255, 220, 180, 0.9);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.close-modal-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 220, 180, 0.5);
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.close-modal-btn:hover {
+  color: #ffb347;
+}
+
+.timer-modal-body {
+  padding: 16px;
+}
+
+.timer-modal-body select {
+  width: 100%;
+  padding: 10px 12px;
+  background: rgba(30, 25, 20, 0.95);
+  border: 1px solid rgba(255, 180, 120, 0.25);
+  border-radius: 8px;
+  color: rgba(255, 220, 180, 0.9);
+  font-size: 0.8rem;
+  font-family: "Cairo", sans-serif;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  direction: rtl;
+  text-align: right;
+}
+
+.timer-modal-body select option {
+  background: #1a1510;
+  color: rgba(255, 220, 180, 0.9);
+  padding: 10px;
+}
+
+.timer-modal-body select:hover {
+  border-color: rgba(255, 180, 120, 0.5);
+}
+
+.timer-modal-body select:focus {
+  border-color: #ffb347;
+}
+
+#customTimerContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+#customTimerInput {
+  flex: 1;
+  padding: 10px 12px;
+  background: rgba(255, 179, 71, 0.05);
+  border: 1px solid rgba(255, 180, 120, 0.25);
+  border-radius: 8px;
+  color: rgba(255, 220, 180, 0.9);
+  font-size: 0.8rem;
+  font-family: "Cairo", sans-serif;
+  text-align: center;
+  outline: none;
+  transition: all 0.2s ease;
+  direction: ltr;
+}
+
+#customTimerInput::placeholder {
+  color: rgba(255, 220, 180, 0.4);
+}
+
+#customTimerInput:hover {
+  border-color: rgba(255, 180, 120, 0.5);
+}
+
+#customTimerInput:focus {
+  border-color: #ffb347;
+}
+
+#customTimerInput::-webkit-inner-spin-button,
+#customTimerInput::-webkit-outer-spin-button {
+  opacity: 0.5;
+}
+
+#setCustomTimer {
+  padding: 10px 16px;
+  background: rgba(255, 179, 71, 0.15);
+  border: 1px solid rgba(255, 180, 120, 0.3);
+  border-radius: 8px;
+  color: rgba(255, 220, 180, 0.9);
+  font-size: 0.8rem;
+  font-family: "Cairo", sans-serif;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+#setCustomTimer:hover {
+  background: rgba(255, 179, 71, 0.25);
+  border-color: #ffb347;
+  color: #ffb347;
+}
+
+#setCustomTimer:active {
+  transform: scale(0.95);
+}
+
 /* Info tooltip */
 .info-tooltip {
   position: relative;
@@ -407,6 +617,37 @@ body::before {
     width: 16px;
     height: 16px;
   }
+
+  .sleep-timer {
+    gap: 6px;
+    padding: 7px 10px;
+  }
+
+  .sleep-timer label {
+    font-size: 0.65rem;
+  }
+
+  .sleep-timer select {
+    font-size: 0.6rem;
+    padding: 3px 6px;
+  }
+
+  .sleep-timer input[type="number"] {
+    width: 50px;
+    font-size: 0.6rem;
+    padding: 3px 6px;
+  }
+
+  .sleep-timer button {
+    font-size: 0.6rem;
+    padding: 3px 8px;
+  }
+
+  .timer-display {
+    font-size: 0.7rem;
+    min-width: 50px;
+    padding: 2px 5px;
+  }
 }
 
 /* Extra small phones */
@@ -494,5 +735,42 @@ body::before {
     width: 160px;
     font-size: 0.5rem;
     padding: 6px 8px;
+  }
+
+  .sleep-timer {
+    gap: 5px;
+    padding: 6px 8px;
+    margin-top: 10px;
+  }
+
+  .sleep-timer svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .sleep-timer label {
+    font-size: 0.6rem;
+  }
+
+  .sleep-timer select {
+    font-size: 0.55rem;
+    padding: 3px 5px;
+  }
+
+  .sleep-timer input[type="number"] {
+    width: 45px;
+    font-size: 0.55rem;
+    padding: 3px 5px;
+  }
+
+  .sleep-timer button {
+    font-size: 0.55rem;
+    padding: 3px 6px;
+  }
+
+  .timer-display {
+    font-size: 0.65rem;
+    min-width: 45px;
+    padding: 2px 4px;
   }
 }

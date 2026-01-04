@@ -3,7 +3,6 @@ const backgrounds = [
   "https://i.pinimg.com/originals/18/83/de/1883de5bfee36b043b973bef00c561e0.gif",
   "https://i.pinimg.com/1200x/36/19/09/36190987c6cd3c29ec4f1ac202decbf1.jpg",
   "https://images.squarespace-cdn.com/content/v1/5fe4caeadae61a2f19719512/fbabc357-b945-4e72-8881-b94e68522174/Cozy+Home+Office?format=2500w",
-  "http://i.imgur.com/MDYkP0A.gif",
   "https://i.pinimg.com/originals/d8/82/8d/d8828d2d6254273a617e6337d292303d.gif",
   "https://i.pinimg.com/originals/9f/42/2b/9f422b3823bc356e0e801f2504452c4c.gif",
   "https://i.pinimg.com/originals/a7/1c/ed/a71ced878e41e9296321504f39e1389f.gif",
@@ -321,6 +320,128 @@ window.addEventListener("beforeunload", () => {
     localStorage.setItem("totalListeningTime", totalListeningSeconds);
   }
 });
+
+// Sleep Timer
+let sleepTimer = null;
+let sleepTimerEndTime = null;
+const timerModal = document.getElementById('timerModal');
+const setTimerBtn = document.getElementById('setTimerBtn');
+const closeModalBtn = document.getElementById('closeModalBtn');
+const sleepTimerDisplay = document.getElementById('sleepTimerDisplay');
+const sleepTimerSelect = document.getElementById('sleepTimerSelect');
+const customTimerInput = document.getElementById('customTimerInput');
+const customTimerContainer = document.getElementById('customTimerContainer');
+const setCustomTimerBtn = document.getElementById('setCustomTimer');
+
+function updateSleepTimerDisplay() {
+    if (!sleepTimerEndTime) {
+        sleepTimerDisplay.textContent = '';
+        return;
+    }
+    
+    const now = Date.now();
+    const remaining = Math.max(0, Math.floor((sleepTimerEndTime - now) / 1000));
+    
+    if (remaining === 0) {
+        sleepTimerDisplay.textContent = '';
+        return;
+    }
+    
+    const minutes = Math.floor(remaining / 60);
+    const seconds = remaining % 60;
+    sleepTimerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+}
+
+function startSleepTimer(minutes) {
+    // Clear existing timer
+    if (sleepTimer) {
+        clearTimeout(sleepTimer);
+        sleepTimer = null;
+        sleepTimerEndTime = null;
+    }
+    
+    if (minutes === 0) {
+        sleepTimerDisplay.textContent = '';
+        timerModal.style.display = 'none';
+        sleepTimerSelect.value = '0';
+        return;
+    }
+    
+    // Set new timer
+    sleepTimerEndTime = Date.now() + (minutes * 60 * 1000);
+    
+    sleepTimer = setTimeout(() => {
+        const originalVolume = audio.volume;
+        
+        const fadeInterval = setInterval(() => {
+            if (audio.volume > 0.05) {
+                audio.volume = Math.max(0, audio.volume - 0.05);
+            } else {
+                clearInterval(fadeInterval);
+                audio.pause();
+                audio.volume = originalVolume;
+                statusText.textContent = 'متوقف - انتهى مؤقت النوم';
+                playBtn.classList.remove('playing');
+                isPlaying = false;
+                sleepTimer = null;
+                sleepTimerEndTime = null;
+                sleepTimerDisplay.textContent = '';
+                sleepTimerSelect.value = '0';
+            }
+        }, 100);
+    }, minutes * 60 * 1000);
+    
+    statusText.textContent = `مؤقت النوم: ${minutes} دقيقة`;
+    timerModal.style.display = 'none';
+}
+
+setTimerBtn.addEventListener('click', () => {
+    timerModal.style.display = 'flex';
+});
+
+closeModalBtn.addEventListener('click', () => {
+    timerModal.style.display = 'none';
+});
+
+timerModal.addEventListener('click', (e) => {
+    if (e.target === timerModal) {
+        timerModal.style.display = 'none';
+    }
+});
+
+sleepTimerSelect.addEventListener('change', (e) => {
+    const value = e.target.value;
+    
+    if (value === 'custom') {
+        customTimerContainer.style.display = 'flex';
+        customTimerInput.focus();
+        return;
+    }
+    
+    customTimerContainer.style.display = 'none';
+    const minutes = parseInt(value);
+    startSleepTimer(minutes);
+});
+
+setCustomTimerBtn.addEventListener('click', () => {
+    const minutes = parseInt(customTimerInput.value);
+    
+    if (isNaN(minutes) || minutes < 1 || minutes > 999) {
+        statusText.textContent = 'أدخل رقماً بين 1 و 999';
+        return;
+    }
+    
+    startSleepTimer(minutes);
+    customTimerInput.value = '';
+});
+
+customTimerInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        setCustomTimerBtn.click();
+    }
+});
+
+setInterval(updateSleepTimerDisplay, 1000);
 
 audio.addEventListener("error", () => {
   statusText.textContent = "خطأ في الاتصال";
