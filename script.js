@@ -38,6 +38,31 @@ const volumeIcon = document.getElementById("volumeIcon");
 const statusDot = document.getElementById("statusDot");
 const statusText = document.getElementById("statusText");
 const playCountElement = document.getElementById("playCount");
+const listeningTimeElement = document.getElementById("listeningTime");
+
+// Listening time tracker
+let listeningStartTime = null;
+let totalListeningSeconds = parseInt(localStorage.getItem('totalListeningTime') || '0');
+
+// Update listening time display
+function updateListeningTimeDisplay() {
+    const hours = Math.floor(totalListeningSeconds / 3600);
+    const minutes = Math.floor((totalListeningSeconds % 3600) / 60);
+    const seconds = totalListeningSeconds % 60;
+    
+    if (!listeningTimeElement) return;
+    
+    if (hours > 0) {
+        listeningTimeElement.textContent = `${hours} ساعة ${minutes} دقيقة`;
+    } else if (minutes > 0) {
+        listeningTimeElement.textContent = `${minutes} دقيقة ${seconds} ثانية`;
+    } else {
+        listeningTimeElement.textContent = `${seconds} ثانية`;
+    }
+}
+
+// Initialize display
+updateListeningTimeDisplay();
 
 // Counter API configuration (using counterapi.dev)
 const COUNTER_NAMESPACE = "quran-radio-fm-esmaill";
@@ -245,7 +270,52 @@ audio.addEventListener("waiting", () => {
 });
 
 audio.addEventListener("playing", () => {
-  statusText.textContent = "يعمل الآن";
+    if (!listeningStartTime) {
+        listeningStartTime = Date.now();
+    }
+    statusText.textContent = 'يعمل الآن';
+});
+
+// Stop tracking and save when paused
+audio.addEventListener('pause', () => {
+    if (listeningStartTime) {
+        const sessionSeconds = Math.floor((Date.now() - listeningStartTime) / 1000);
+        totalListeningSeconds += sessionSeconds;
+        localStorage.setItem('totalListeningTime', totalListeningSeconds);
+        updateListeningTimeDisplay();
+        listeningStartTime = null;
+    }
+});
+
+// Update display every second while playing
+setInterval(() => {
+    if (listeningStartTime && !audio.paused) {
+        const currentSessionSeconds = Math.floor((Date.now() - listeningStartTime) / 1000);
+        const currentTotal = totalListeningSeconds + currentSessionSeconds;
+        
+        const hours = Math.floor(currentTotal / 3600);
+        const minutes = Math.floor((currentTotal % 3600) / 60);
+        const seconds = currentTotal % 60;
+        
+        if (!listeningTimeElement) return;
+        
+        if (hours > 0) {
+            listeningTimeElement.textContent = `${hours} ساعة ${minutes} دقيقة`;
+        } else if (minutes > 0) {
+            listeningTimeElement.textContent = `${minutes} دقيقة ${seconds} ثانية`;
+        } else {
+            listeningTimeElement.textContent = `${seconds} ثانية`;
+        }
+    }
+}, 1000);
+
+// Save on page unload
+window.addEventListener('beforeunload', () => {
+    if (listeningStartTime) {
+        const sessionSeconds = Math.floor((Date.now() - listeningStartTime) / 1000);
+        totalListeningSeconds += sessionSeconds;
+        localStorage.setItem('totalListeningTime', totalListeningSeconds);
+    }
 });
 
 audio.addEventListener("error", () => {
