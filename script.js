@@ -36,9 +36,31 @@ const volumeSlider = document.getElementById('volumeSlider');
 const volumeIcon = document.getElementById('volumeIcon');
 const statusDot = document.getElementById('statusDot');
 const statusText = document.getElementById('statusText');
+const playCountElement = document.getElementById('playCount');
+
+// Initialize play count from localStorage
+let playCount = parseInt(localStorage.getItem('radioPlayCount')) || 0;
+playCountElement.textContent = playCount;
 
 let isPlaying = false;
 let playTimeout = null;
+let wasPlayingBeforeOffline = false;
+
+// Auto-reconnect when connection is restored
+window.addEventListener('online', () => {
+    if (wasPlayingBeforeOffline && !isPlaying) {
+        statusText.textContent = 'جاري إعادة الاتصال...';
+        playBtn.click();
+    }
+});
+
+window.addEventListener('offline', () => {
+    if (isPlaying) {
+        wasPlayingBeforeOffline = true;
+        statusText.textContent = 'انقطع الاتصال...';
+        statusDot.classList.add('offline');
+    }
+});
 
 // Play/Pause toggle with timeout and loading state
 playBtn.addEventListener('click', () => {
@@ -70,6 +92,11 @@ playBtn.addEventListener('click', () => {
             statusText.textContent = 'يعمل الآن';
             statusDot.classList.remove('offline');
             isPlaying = true;
+            
+            // Increment play count
+            playCount++;
+            localStorage.setItem('radioPlayCount', playCount);
+            playCountElement.textContent = playCount;
         }).catch(err => {
             if (playTimeout) clearTimeout(playTimeout);
             playBtn.classList.remove('loading');
@@ -144,5 +171,20 @@ audio.addEventListener('error', () => {
     statusText.textContent = 'خطأ في الاتصال';
     statusDot.classList.add('offline');
     playBtn.classList.remove('playing');
+    
+    // Remember if was playing for auto-reconnect
+    if (isPlaying) {
+        wasPlayingBeforeOffline = true;
+    }
     isPlaying = false;
+    
+    // Try to reconnect after 3 seconds if was playing
+    if (wasPlayingBeforeOffline) {
+        setTimeout(() => {
+            if (!isPlaying && navigator.onLine) {
+                statusText.textContent = 'جاري إعادة الاتصال...';
+                playBtn.click();
+            }
+        }, 3000);
+    }
 });

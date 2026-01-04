@@ -359,3 +359,50 @@ body::before {
         height: 14px;
     }
 }
+
+/* Play Counter */
+.play-counter {
+    text-align: center;
+    margin-top: 15px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 180, 120, 0.1);
+    font-size: 0.7rem;
+    color: rgba(255, 220, 180, 0.5);
+    font-family: 'Cairo', sans-serif;
+}
+
+#playCount {
+    font-weight: 600;
+    color: rgba(255, 179, 71, 0.8);
+}
+
+/* Suggestions Button */
+.suggestions-btn {
+    display: block;
+    width: fit-content;
+    margin: 20px auto 0;
+    padding: 10px 24px;
+    background: rgba(20, 15, 10, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 180, 120, 0.2);
+    border-radius: 50px;
+    color: #ffcc80;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-family: 'Cairo', sans-serif;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.suggestions-btn:hover {
+    background: rgba(255, 179, 71, 0.2);
+    border-color: #ffb347;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 179, 71, 0.15);
+    color: #fff;
+}
+
+.suggestions-btn:active {
+    transform: translateY(0);
+}
