@@ -1,64 +1,91 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>إذاعة القرآن الكريم</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body style="background-image: url('https://giffiles.alphacoders.com/211/211273.gif');">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body
+    style="
+      background-image: url('https://giffiles.alphacoders.com/211/211273.gif');
+    "
+  >
     <div class="container">
-        <div class="player-card">
-            <div class="logo">
-                <h1>إذاعة القرآن الكريم</h1>
-                <span>بث مباشر</span>
-            </div>
-
-            <div class="status">
-                <div class="status-indicator">
-                    <span class="status-dot" id="statusDot"></span>
-                    <span id="statusText">جاهز للتشغيل</span>
-                </div>
-            </div>
-
-            <div class="controls">
-                <button class="play-btn" id="playBtn" aria-label="Play/Pause">
-                    <svg class="play-icon" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z"/>
-                    </svg>
-                    <svg class="pause-icon" viewBox="0 0 24 24">
-                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-                    </svg>
-                </button>
-            </div>
-
-            <div class="volume-control">
-                <button class="volume-icon" id="volumeIcon" aria-label="تبديل الصوت" type="button">
-                    <svg viewBox="0 0 24 24" role="presentation">
-                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
-                    </svg>
-                </button>
-                <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="80" aria-label="مستوى الصوت">
-            </div>
-
-            <div class="play-counter">
-                <span>عدد مرات الاستماع: </span>
-                <span id="playCount">0</span>
-            </div>
+      <div class="player-card">
+        <div class="logo">
+          <h1>إذاعة القرآن الكريم</h1>
+          <span>بث مباشر</span>
         </div>
 
-        <a href="https://forms.gle/2M8vQzAZrjYa1sZZ9" target="_blank" class="suggestions-btn">
-            لديك اقتراح؟
-        </a>
+        <div class="status">
+          <div class="status-indicator">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText">جاهز للتشغيل</span>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button class="play-btn" id="playBtn" aria-label="Play/Pause">
+            <svg class="play-icon" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            <svg class="pause-icon" viewBox="0 0 24 24">
+              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="volume-control">
+          <button
+            class="volume-icon"
+            id="volumeIcon"
+            aria-label="تبديل الصوت"
+            type="button"
+          >
+            <svg viewBox="0 0 24 24" role="presentation">
+              <path
+                d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"
+              />
+            </svg>
+          </button>
+          <input
+            type="range"
+            class="volume-slider"
+            id="volumeSlider"
+            min="0"
+            max="100"
+            value="80"
+            aria-label="مستوى الصوت"
+          />
+        </div>
+
+        <div class="play-counter">
+          <span>عدد مرات الاستماع: </span>
+          <span id="playCount">0</span>
+        </div>
+      </div>
+
+      <a
+        href="https://forms.gle/2M8vQzAZrjYa1sZZ9"
+        target="_blank"
+        class="suggestions-btn"
+      >
+        لديك اقتراح؟
+      </a>
     </div>
 
-        <audio id="audioPlayer" preload="none">
-            <source src="https://stream.radiojar.com/8s5u5tpdtwzuv" type="audio/mpeg">
-        </audio>
+    <audio id="audioPlayer" preload="none">
+      <source
+        src="https://stream.radiojar.com/8s5u5tpdtwzuv"
+        type="audio/mpeg"
+      />
+    </audio>
 
-        <script src="script.js"></script>
-</body>
-
+    <script src="script.js"></script>
+  </body>
 </html>
-
