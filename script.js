@@ -324,121 +324,123 @@ window.addEventListener("beforeunload", () => {
 // Sleep Timer
 let sleepTimer = null;
 let sleepTimerEndTime = null;
-const timerModal = document.getElementById('timerModal');
-const setTimerBtn = document.getElementById('setTimerBtn');
-const closeModalBtn = document.getElementById('closeModalBtn');
-const sleepTimerDisplay = document.getElementById('sleepTimerDisplay');
-const sleepTimerSelect = document.getElementById('sleepTimerSelect');
-const customTimerInput = document.getElementById('customTimerInput');
-const customTimerContainer = document.getElementById('customTimerContainer');
-const setCustomTimerBtn = document.getElementById('setCustomTimer');
+const timerModal = document.getElementById("timerModal");
+const setTimerBtn = document.getElementById("setTimerBtn");
+const closeModalBtn = document.getElementById("closeModalBtn");
+const sleepTimerDisplay = document.getElementById("sleepTimerDisplay");
+const sleepTimerSelect = document.getElementById("sleepTimerSelect");
+const customTimerInput = document.getElementById("customTimerInput");
+const customTimerContainer = document.getElementById("customTimerContainer");
+const setCustomTimerBtn = document.getElementById("setCustomTimer");
 
 function updateSleepTimerDisplay() {
-    if (!sleepTimerEndTime) {
-        sleepTimerDisplay.textContent = '';
-        return;
-    }
-    
-    const now = Date.now();
-    const remaining = Math.max(0, Math.floor((sleepTimerEndTime - now) / 1000));
-    
-    if (remaining === 0) {
-        sleepTimerDisplay.textContent = '';
-        return;
-    }
-    
-    const minutes = Math.floor(remaining / 60);
-    const seconds = remaining % 60;
-    sleepTimerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  if (!sleepTimerEndTime) {
+    sleepTimerDisplay.textContent = "";
+    return;
+  }
+
+  const now = Date.now();
+  const remaining = Math.max(0, Math.floor((sleepTimerEndTime - now) / 1000));
+
+  if (remaining === 0) {
+    sleepTimerDisplay.textContent = "";
+    return;
+  }
+
+  const minutes = Math.floor(remaining / 60);
+  const seconds = remaining % 60;
+  sleepTimerDisplay.textContent = `${minutes}:${seconds
+    .toString()
+    .padStart(2, "0")}`;
 }
 
 function startSleepTimer(minutes) {
-    // Clear existing timer
-    if (sleepTimer) {
-        clearTimeout(sleepTimer);
+  // Clear existing timer
+  if (sleepTimer) {
+    clearTimeout(sleepTimer);
+    sleepTimer = null;
+    sleepTimerEndTime = null;
+  }
+
+  if (minutes === 0) {
+    sleepTimerDisplay.textContent = "";
+    timerModal.style.display = "none";
+    sleepTimerSelect.value = "0";
+    return;
+  }
+
+  // Set new timer
+  sleepTimerEndTime = Date.now() + minutes * 60 * 1000;
+
+  sleepTimer = setTimeout(() => {
+    const originalVolume = audio.volume;
+
+    const fadeInterval = setInterval(() => {
+      if (audio.volume > 0.05) {
+        audio.volume = Math.max(0, audio.volume - 0.05);
+      } else {
+        clearInterval(fadeInterval);
+        audio.pause();
+        audio.volume = originalVolume;
+        statusText.textContent = "متوقف - انتهى مؤقت النوم";
+        playBtn.classList.remove("playing");
+        isPlaying = false;
         sleepTimer = null;
         sleepTimerEndTime = null;
-    }
-    
-    if (minutes === 0) {
-        sleepTimerDisplay.textContent = '';
-        timerModal.style.display = 'none';
-        sleepTimerSelect.value = '0';
-        return;
-    }
-    
-    // Set new timer
-    sleepTimerEndTime = Date.now() + (minutes * 60 * 1000);
-    
-    sleepTimer = setTimeout(() => {
-        const originalVolume = audio.volume;
-        
-        const fadeInterval = setInterval(() => {
-            if (audio.volume > 0.05) {
-                audio.volume = Math.max(0, audio.volume - 0.05);
-            } else {
-                clearInterval(fadeInterval);
-                audio.pause();
-                audio.volume = originalVolume;
-                statusText.textContent = 'متوقف - انتهى مؤقت النوم';
-                playBtn.classList.remove('playing');
-                isPlaying = false;
-                sleepTimer = null;
-                sleepTimerEndTime = null;
-                sleepTimerDisplay.textContent = '';
-                sleepTimerSelect.value = '0';
-            }
-        }, 100);
-    }, minutes * 60 * 1000);
-    
-    statusText.textContent = `مؤقت النوم: ${minutes} دقيقة`;
-    timerModal.style.display = 'none';
+        sleepTimerDisplay.textContent = "";
+        sleepTimerSelect.value = "0";
+      }
+    }, 100);
+  }, minutes * 60 * 1000);
+
+  statusText.textContent = `مؤقت النوم: ${minutes} دقيقة`;
+  timerModal.style.display = "none";
 }
 
-setTimerBtn.addEventListener('click', () => {
-    timerModal.style.display = 'flex';
+setTimerBtn.addEventListener("click", () => {
+  timerModal.style.display = "flex";
 });
 
-closeModalBtn.addEventListener('click', () => {
-    timerModal.style.display = 'none';
+closeModalBtn.addEventListener("click", () => {
+  timerModal.style.display = "none";
 });
 
-timerModal.addEventListener('click', (e) => {
-    if (e.target === timerModal) {
-        timerModal.style.display = 'none';
-    }
+timerModal.addEventListener("click", (e) => {
+  if (e.target === timerModal) {
+    timerModal.style.display = "none";
+  }
 });
 
-sleepTimerSelect.addEventListener('change', (e) => {
-    const value = e.target.value;
-    
-    if (value === 'custom') {
-        customTimerContainer.style.display = 'flex';
-        customTimerInput.focus();
-        return;
-    }
-    
-    customTimerContainer.style.display = 'none';
-    const minutes = parseInt(value);
-    startSleepTimer(minutes);
+sleepTimerSelect.addEventListener("change", (e) => {
+  const value = e.target.value;
+
+  if (value === "custom") {
+    customTimerContainer.style.display = "flex";
+    customTimerInput.focus();
+    return;
+  }
+
+  customTimerContainer.style.display = "none";
+  const minutes = parseInt(value);
+  startSleepTimer(minutes);
 });
 
-setCustomTimerBtn.addEventListener('click', () => {
-    const minutes = parseInt(customTimerInput.value);
-    
-    if (isNaN(minutes) || minutes < 1 || minutes > 999) {
-        statusText.textContent = 'أدخل رقماً بين 1 و 999';
-        return;
-    }
-    
-    startSleepTimer(minutes);
-    customTimerInput.value = '';
+setCustomTimerBtn.addEventListener("click", () => {
+  const minutes = parseInt(customTimerInput.value);
+
+  if (isNaN(minutes) || minutes < 1 || minutes > 999) {
+    statusText.textContent = "أدخل رقماً بين 1 و 999";
+    return;
+  }
+
+  startSleepTimer(minutes);
+  customTimerInput.value = "";
 });
 
-customTimerInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        setCustomTimerBtn.click();
-    }
+customTimerInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    setCustomTimerBtn.click();
+  }
 });
 
 setInterval(updateSleepTimerDisplay, 1000);

@@ -6,14 +6,14 @@
 
 ## 📋 Quick Reference
 
-| Property | Value |
-|----------|-------|
-| **Project Name** | إذاعة القرآن الكريم (Quran Radio) |
-| **Type** | Web-based Audio Streaming Player |
-| **Language** | Arabic (RTL - Right-to-Left) |
-| **Framework** | Vanilla HTML/CSS/JavaScript (No frameworks) |
-| **Audio Source** | RadioJar Stream |
-| **Stream URL** | `https://stream.radiojar.com/8s5u5tpdtwzuv` |
+| Property         | Value                                       |
+| ---------------- | ------------------------------------------- |
+| **Project Name** | إذاعة القرآن الكريم (Quran Radio)           |
+| **Type**         | Web-based Audio Streaming Player            |
+| **Language**     | Arabic (RTL - Right-to-Left)                |
+| **Framework**    | Vanilla HTML/CSS/JavaScript (No frameworks) |
+| **Audio Source** | RadioJar Stream                             |
+| **Stream URL**   | `https://stream.radiojar.com/8s5u5tpdtwzuv` |
 
 ---
 
@@ -34,14 +34,14 @@ fm/
 
 ## 🔧 Technology Stack
 
-| Technology | Usage |
-|------------|-------|
-| HTML5 | Structure, semantic elements, audio element |
-| CSS3 | Flexbox, animations, backdrop-filter, custom properties |
-| Vanilla JavaScript | ES6+, async/await, DOM manipulation |
-| Google Fonts | Amiri (Arabic serif), Cairo (Arabic sans-serif) |
-| CounterAPI.dev | Global play counter synchronization |
-| localStorage | Listening time, fallback counter |
+| Technology         | Usage                                                   |
+| ------------------ | ------------------------------------------------------- |
+| HTML5              | Structure, semantic elements, audio element             |
+| CSS3               | Flexbox, animations, backdrop-filter, custom properties |
+| Vanilla JavaScript | ES6+, async/await, DOM manipulation                     |
+| Google Fonts       | Amiri (Arabic serif), Cairo (Arabic sans-serif)         |
+| CounterAPI.dev     | Global play counter synchronization                     |
+| localStorage       | Listening time, fallback counter                        |
 
 ---
 
@@ -52,11 +52,15 @@ fm/
 **Purpose:** Defines the complete UI structure.
 
 #### HTML Root Attributes
+
 ```html
-<html lang="ar" dir="rtl">  <!-- Arabic language, Right-to-Left direction -->
+<html lang="ar" dir="rtl">
+  <!-- Arabic language, Right-to-Left direction -->
+</html>
 ```
 
 #### Complete DOM Hierarchy
+
 ```
 <body>
 ├── <div class="container">
@@ -116,24 +120,24 @@ fm/
 
 #### All Element IDs (Complete Reference)
 
-| ID | Element | Purpose |
-|----|---------|---------|
-| `playBtn` | `<button>` | Play/pause toggle button |
-| `volumeIcon` | `<button>` | Mute/unmute toggle |
-| `volumeSlider` | `<input>` | Volume range slider (0-100) |
-| `statusDot` | `<span>` | Connection status indicator |
-| `statusText` | `<span>` | Status message display |
-| `audioPlayer` | `<audio>` | Hidden audio element |
-| `listeningTime` | `<span>` | Listening time display |
-| `playCount` | `<span>` | Global play counter display |
-| `setTimerBtn` | `<button>` | Opens timer modal |
-| `timerModal` | `<div>` | Timer modal container |
-| `closeModalBtn` | `<button>` | Closes timer modal |
-| `sleepTimerDisplay` | `<span>` | Countdown display on button |
-| `sleepTimerSelect` | `<select>` | Timer preset dropdown |
-| `customTimerContainer` | `<div>` | Custom input wrapper |
-| `customTimerInput` | `<input>` | Custom minutes input |
-| `setCustomTimer` | `<button>` | Sets custom timer |
+| ID                     | Element    | Purpose                     |
+| ---------------------- | ---------- | --------------------------- |
+| `playBtn`              | `<button>` | Play/pause toggle button    |
+| `volumeIcon`           | `<button>` | Mute/unmute toggle          |
+| `volumeSlider`         | `<input>`  | Volume range slider (0-100) |
+| `statusDot`            | `<span>`   | Connection status indicator |
+| `statusText`           | `<span>`   | Status message display      |
+| `audioPlayer`          | `<audio>`  | Hidden audio element        |
+| `listeningTime`        | `<span>`   | Listening time display      |
+| `playCount`            | `<span>`   | Global play counter display |
+| `setTimerBtn`          | `<button>` | Opens timer modal           |
+| `timerModal`           | `<div>`    | Timer modal container       |
+| `closeModalBtn`        | `<button>` | Closes timer modal          |
+| `sleepTimerDisplay`    | `<span>`   | Countdown display on button |
+| `sleepTimerSelect`     | `<select>` | Timer preset dropdown       |
+| `customTimerContainer` | `<div>`    | Custom input wrapper        |
+| `customTimerInput`     | `<input>`  | Custom minutes input        |
+| `setCustomTimer`       | `<button>` | Sets custom timer           |
 
 ---
 
@@ -155,24 +159,24 @@ const playCountElement = document.getElementById("playCount");
 const listeningTimeElement = document.getElementById("listeningTime");
 
 // Timer Modal Elements
-const timerModal = document.getElementById('timerModal');
-const setTimerBtn = document.getElementById('setTimerBtn');
-const closeModalBtn = document.getElementById('closeModalBtn');
-const sleepTimerDisplay = document.getElementById('sleepTimerDisplay');
-const sleepTimerSelect = document.getElementById('sleepTimerSelect');
-const customTimerInput = document.getElementById('customTimerInput');
-const customTimerContainer = document.getElementById('customTimerContainer');
-const setCustomTimerBtn = document.getElementById('setCustomTimer');
+const timerModal = document.getElementById("timerModal");
+const setTimerBtn = document.getElementById("setTimerBtn");
+const closeModalBtn = document.getElementById("closeModalBtn");
+const sleepTimerDisplay = document.getElementById("sleepTimerDisplay");
+const sleepTimerSelect = document.getElementById("sleepTimerSelect");
+const customTimerInput = document.getElementById("customTimerInput");
+const customTimerContainer = document.getElementById("customTimerContainer");
+const setCustomTimerBtn = document.getElementById("setCustomTimer");
 
 // State Variables
-let isPlaying = false;                    // Current playback state
-let playTimeout = null;                   // Connection timeout reference
-let wasPlayingBeforeOffline = false;      // For auto-reconnect
-let previousVolume = 0.8;                 // For mute/unmute restore
-let listeningStartTime = null;            // Session start timestamp
-let totalListeningSeconds = 0;            // Total from localStorage
-let sleepTimer = null;                    // Sleep timer timeout reference
-let sleepTimerEndTime = null;             // Sleep timer end timestamp
+let isPlaying = false; // Current playback state
+let playTimeout = null; // Connection timeout reference
+let wasPlayingBeforeOffline = false; // For auto-reconnect
+let previousVolume = 0.8; // For mute/unmute restore
+let listeningStartTime = null; // Session start timestamp
+let totalListeningSeconds = 0; // Total from localStorage
+let sleepTimer = null; // Sleep timer timeout reference
+let sleepTimerEndTime = null; // Sleep timer end timestamp
 
 // API Configuration
 const COUNTER_NAMESPACE = "quran-radio-fm-esmaill";
@@ -181,40 +185,40 @@ const COUNTER_KEY = "plays";
 
 #### Core Functions
 
-| Function | Purpose | Parameters | Returns |
-|----------|---------|------------|---------|
-| `setBackground()` | Sets random background on desktop (>768px) | None | void |
-| `attemptPlay(incrementCounter)` | Attempts to play audio with 5s timeout | `incrementCounter`: boolean (default true) | void |
-| `fetchPlayCount()` | Fetches global play count from CounterAPI | None | Promise<void> |
-| `incrementPlayCount()` | Increments global play count | None | Promise<void> |
-| `updateListeningTimeDisplay()` | Updates listening time text | None | void |
-| `updateVolumeIcon(volume)` | Updates volume icon based on level | `volume`: 0-1 | void |
-| `updateSleepTimerDisplay()` | Updates countdown on timer button | None | void |
-| `startSleepTimer(minutes)` | Starts sleep timer with fade-out | `minutes`: number | void |
+| Function                        | Purpose                                    | Parameters                                 | Returns       |
+| ------------------------------- | ------------------------------------------ | ------------------------------------------ | ------------- |
+| `setBackground()`               | Sets random background on desktop (>768px) | None                                       | void          |
+| `attemptPlay(incrementCounter)` | Attempts to play audio with 5s timeout     | `incrementCounter`: boolean (default true) | void          |
+| `fetchPlayCount()`              | Fetches global play count from CounterAPI  | None                                       | Promise<void> |
+| `incrementPlayCount()`          | Increments global play count               | None                                       | Promise<void> |
+| `updateListeningTimeDisplay()`  | Updates listening time text                | None                                       | void          |
+| `updateVolumeIcon(volume)`      | Updates volume icon based on level         | `volume`: 0-1                              | void          |
+| `updateSleepTimerDisplay()`     | Updates countdown on timer button          | None                                       | void          |
+| `startSleepTimer(minutes)`      | Starts sleep timer with fade-out           | `minutes`: number                          | void          |
 
 #### Event Listeners Reference
 
-| Event | Target | Action |
-|-------|--------|--------|
-| `click` | `playBtn` | Toggle play/pause |
-| `click` | `volumeIcon` | Toggle mute/unmute |
-| `input` | `volumeSlider` | Adjust volume |
-| `keydown` (Space) | `document` | Toggle play/pause |
-| `click` | `setTimerBtn` | Open timer modal |
-| `click` | `closeModalBtn` | Close timer modal |
-| `click` | `timerModal` | Close if clicked outside |
-| `change` | `sleepTimerSelect` | Set timer or show custom input |
-| `click` | `setCustomTimerBtn` | Set custom timer |
-| `keypress` (Enter) | `customTimerInput` | Trigger set custom timer |
-| `online` | `window` | Auto-reconnect |
-| `offline` | `window` | Mark was playing |
-| `beforeunload` | `window` | Save listening time |
-| `waiting` | `audio` | Show loading status |
-| `playing` | `audio` | Start listening time tracking |
-| `pause` | `audio` | Save listening time |
-| `error` | `audio` | Handle errors, auto-retry |
-| `stalled` | `audio` | Auto-retry connection |
-| `ended` | `audio` | Auto-retry (stream shouldn't end) |
+| Event              | Target              | Action                            |
+| ------------------ | ------------------- | --------------------------------- |
+| `click`            | `playBtn`           | Toggle play/pause                 |
+| `click`            | `volumeIcon`        | Toggle mute/unmute                |
+| `input`            | `volumeSlider`      | Adjust volume                     |
+| `keydown` (Space)  | `document`          | Toggle play/pause                 |
+| `click`            | `setTimerBtn`       | Open timer modal                  |
+| `click`            | `closeModalBtn`     | Close timer modal                 |
+| `click`            | `timerModal`        | Close if clicked outside          |
+| `change`           | `sleepTimerSelect`  | Set timer or show custom input    |
+| `click`            | `setCustomTimerBtn` | Set custom timer                  |
+| `keypress` (Enter) | `customTimerInput`  | Trigger set custom timer          |
+| `online`           | `window`            | Auto-reconnect                    |
+| `offline`          | `window`            | Mark was playing                  |
+| `beforeunload`     | `window`            | Save listening time               |
+| `waiting`          | `audio`             | Show loading status               |
+| `playing`          | `audio`             | Start listening time tracking     |
+| `pause`            | `audio`             | Save listening time               |
+| `error`            | `audio`             | Handle errors, auto-retry         |
+| `stalled`          | `audio`             | Auto-retry connection             |
+| `ended`            | `audio`             | Auto-retry (stream shouldn't end) |
 
 #### State Machine: Play Button
 
@@ -258,46 +262,51 @@ const COUNTER_KEY = "plays";
 #### CSS Class Reference
 
 ##### Container & Layout
-| Class | Purpose |
-|-------|---------|
-| `.container` | Main wrapper, max-width: 320px, centered |
-| `.player-card` | Glassmorphism card with blur effect |
-| `.logo` | Title section with gradient text |
-| `.status` | Status indicator wrapper |
-| `.controls` | Play button container |
-| `.volume-control` | Volume slider section |
-| `.listening-time` | Time tracker display |
+
+| Class             | Purpose                                  |
+| ----------------- | ---------------------------------------- |
+| `.container`      | Main wrapper, max-width: 320px, centered |
+| `.player-card`    | Glassmorphism card with blur effect      |
+| `.logo`           | Title section with gradient text         |
+| `.status`         | Status indicator wrapper                 |
+| `.controls`       | Play button container                    |
+| `.volume-control` | Volume slider section                    |
+| `.listening-time` | Time tracker display                     |
 
 ##### Play Button States
-| Class | Applied When | Visual Effect |
-|-------|--------------|---------------|
-| (none) | Idle | Default orange gradient |
-| `.loading` | Connecting | Pulsing animation |
-| `.playing` | Playing | Shows pause icon |
+
+| Class      | Applied When | Visual Effect           |
+| ---------- | ------------ | ----------------------- |
+| (none)     | Idle         | Default orange gradient |
+| `.loading` | Connecting   | Pulsing animation       |
+| `.playing` | Playing      | Shows pause icon        |
 
 ##### Status Dot States
-| Class | Applied When | Visual Effect |
-|-------|--------------|---------------|
-| (none) | Connected | Gold, pulsing animation |
-| `.offline` | Disconnected/Error | Gray, no animation |
+
+| Class      | Applied When       | Visual Effect           |
+| ---------- | ------------------ | ----------------------- |
+| (none)     | Connected          | Gold, pulsing animation |
+| `.offline` | Disconnected/Error | Gray, no animation      |
 
 ##### Timer Components
-| Class | Purpose |
-|-------|---------|
-| `.set-timer-btn` | "اضبط المؤقت" button |
-| `.timer-badge` | Countdown display inside button |
-| `.timer-modal` | Full-screen modal backdrop |
-| `.timer-modal-content` | Modal dialog box |
-| `.timer-modal-header` | Modal title & close button |
-| `.timer-modal-body` | Modal form content |
+
+| Class                  | Purpose                         |
+| ---------------------- | ------------------------------- |
+| `.set-timer-btn`       | "اضبط المؤقت" button            |
+| `.timer-badge`         | Countdown display inside button |
+| `.timer-modal`         | Full-screen modal backdrop      |
+| `.timer-modal-content` | Modal dialog box                |
+| `.timer-modal-header`  | Modal title & close button      |
+| `.timer-modal-body`    | Modal form content              |
 
 ##### Other Components
-| Class | Purpose |
-|-------|---------|
-| `.play-counter` | Fixed bottom-left counter |
-| `.suggestions-btn` | Feedback link button |
-| `.info-tooltip` | Hover tooltip container |
-| `.tooltip-text` | Tooltip content |
+
+| Class              | Purpose                   |
+| ------------------ | ------------------------- |
+| `.play-counter`    | Fixed bottom-left counter |
+| `.suggestions-btn` | Feedback link button      |
+| `.info-tooltip`    | Hover tooltip container   |
+| `.tooltip-text`    | Tooltip content           |
 
 #### Color Palette Reference
 
@@ -327,35 +336,48 @@ Border Medium: rgba(255, 180, 120, 0.3)
 
 ```css
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 @keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 ```
 
 #### Responsive Breakpoints
 
-| Breakpoint | Target | Key Changes |
-|------------|--------|-------------|
-| `> 768px` | Desktop | Random backgrounds, smaller touch targets |
-| `≤ 768px` | Tablet/Mobile | Larger buttons, lighter overlay |
-| `≤ 400px` | Small phones | Reduced padding, smaller fonts |
+| Breakpoint | Target        | Key Changes                               |
+| ---------- | ------------- | ----------------------------------------- |
+| `> 768px`  | Desktop       | Random backgrounds, smaller touch targets |
+| `≤ 768px`  | Tablet/Mobile | Larger buttons, lighter overlay           |
+| `≤ 400px`  | Small phones  | Reduced padding, smaller fonts            |
 
 ---
 
 ## 🔌 External APIs
 
 ### 1. RadioJar Audio Stream
+
 ```
 URL: https://stream.radiojar.com/8s5u5tpdtwzuv
 Type: MPEG/MP3 live stream
 ```
 
 ### 2. CounterAPI.dev
+
 ```javascript
 // Fetch current count
 GET https://api.counterapi.dev/v1/quran-radio-fm-esmaill/plays
@@ -367,24 +389,29 @@ GET https://api.counterapi.dev/v1/quran-radio-fm-esmaill/plays/up
 ```
 
 ### 3. Google Fonts
+
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;600;700&display=swap"
+  rel="stylesheet"
+/>
 ```
 
 ---
 
 ## 💾 localStorage Keys
 
-| Key | Type | Purpose | Example Value |
-|-----|------|---------|---------------|
-| `totalListeningTime` | number (string) | Total seconds listened | `"3600"` |
-| `radioPlayCount` | number (string) | Fallback play counter | `"150"` |
+| Key                  | Type            | Purpose                | Example Value |
+| -------------------- | --------------- | ---------------------- | ------------- |
+| `totalListeningTime` | number (string) | Total seconds listened | `"3600"`      |
+| `radioPlayCount`     | number (string) | Fallback play counter  | `"150"`       |
 
 ---
 
 ## 🔄 Feature Workflows
 
 ### Play Audio Flow
+
 ```
 1. User clicks playBtn
 2. attemptPlay() called
@@ -396,6 +423,7 @@ GET https://api.counterapi.dev/v1/quran-radio-fm-esmaill/plays/up
 ```
 
 ### Sleep Timer Flow
+
 ```
 1. User clicks "اضبط المؤقت" button
 2. Modal opens (display: flex)
@@ -410,6 +438,7 @@ GET https://api.counterapi.dev/v1/quran-radio-fm-esmaill/plays/up
 ```
 
 ### Auto-Reconnect Flow
+
 ```
 1. Stream error or connection lost
 2. wasPlayingBeforeOffline = true
@@ -419,6 +448,7 @@ GET https://api.counterapi.dev/v1/quran-radio-fm-esmaill/plays/up
 ```
 
 ### Listening Time Tracking
+
 ```
 1. Audio starts playing → listeningStartTime = Date.now()
 2. Every 1 second → Update display with current session + stored total
@@ -430,60 +460,64 @@ GET https://api.counterapi.dev/v1/quran-radio-fm-esmaill/plays/up
 
 ## 📝 Complete Arabic Text Reference
 
-| Key | Arabic | English | Usage |
-|-----|--------|---------|-------|
-| title | إذاعة القرآن الكريم | Holy Quran Radio | Logo |
-| subtitle | بث مباشر | Live Broadcast | Under logo |
-| ready | جاهز للتشغيل | Ready to Play | Initial status |
-| connecting | جاري الاتصال... | Connecting... | Loading state |
-| loading | جاري التحميل... | Loading... | Buffering |
-| playing | يعمل الآن | Now Playing | Active playback |
-| stopped | متوقف | Stopped | Paused state |
-| error | خطأ - حاول مرة أخرى | Error - Try Again | General error |
-| connectionFailed | فشل الاتصال - حاول مرة أخرى | Connection Failed | Timeout |
-| connectionError | خطأ في الاتصال | Connection Error | Stream error |
-| reconnecting | جاري إعادة الاتصال... | Reconnecting... | Auto-retry |
-| disconnected | انقطع الاتصال... | Disconnected | Offline |
-| sleepTimerEnded | متوقف - انتهى مؤقت النوم | Stopped - Sleep Timer Ended | Timer complete |
-| setTimer | اضبط المؤقت | Set Timer | Timer button |
-| sleepTimer | مؤقت النوم | Sleep Timer | Modal title |
-| stopTimer | إيقاف المؤقت | Stop Timer | First option |
-| custom | مخصص | Custom | Custom option |
-| set | تعيين | Set | Confirm button |
-| minutes | دقيقة/دقائق | Minute(s) | Time display |
-| seconds | ثانية | Second(s) | Time display |
-| hour | ساعة | Hour | Time display |
-| hours | ساعتان | Two Hours | Time display |
-| hourAndHalf | ساعة ونصف | Hour and Half | Preset option |
-| listeningTime | وقت الاستماع الخاص بك | Your Listening Time | Time tracker |
-| playCount | مرات التشغيل | Play Count | Counter label |
-| suggestion | لديك اقتراح؟ | Have a Suggestion? | Feedback link |
-| cacheWarning | البيانات محفوظة في متصفحك... | Data saved in browser... | Tooltip |
-| enterNumber | أدخل رقماً بين 1 و 999 | Enter number between 1-999 | Validation |
+| Key              | Arabic                       | English                     | Usage           |
+| ---------------- | ---------------------------- | --------------------------- | --------------- |
+| title            | إذاعة القرآن الكريم          | Holy Quran Radio            | Logo            |
+| subtitle         | بث مباشر                     | Live Broadcast              | Under logo      |
+| ready            | جاهز للتشغيل                 | Ready to Play               | Initial status  |
+| connecting       | جاري الاتصال...              | Connecting...               | Loading state   |
+| loading          | جاري التحميل...              | Loading...                  | Buffering       |
+| playing          | يعمل الآن                    | Now Playing                 | Active playback |
+| stopped          | متوقف                        | Stopped                     | Paused state    |
+| error            | خطأ - حاول مرة أخرى          | Error - Try Again           | General error   |
+| connectionFailed | فشل الاتصال - حاول مرة أخرى  | Connection Failed           | Timeout         |
+| connectionError  | خطأ في الاتصال               | Connection Error            | Stream error    |
+| reconnecting     | جاري إعادة الاتصال...        | Reconnecting...             | Auto-retry      |
+| disconnected     | انقطع الاتصال...             | Disconnected                | Offline         |
+| sleepTimerEnded  | متوقف - انتهى مؤقت النوم     | Stopped - Sleep Timer Ended | Timer complete  |
+| setTimer         | اضبط المؤقت                  | Set Timer                   | Timer button    |
+| sleepTimer       | مؤقت النوم                   | Sleep Timer                 | Modal title     |
+| stopTimer        | إيقاف المؤقت                 | Stop Timer                  | First option    |
+| custom           | مخصص                         | Custom                      | Custom option   |
+| set              | تعيين                        | Set                         | Confirm button  |
+| minutes          | دقيقة/دقائق                  | Minute(s)                   | Time display    |
+| seconds          | ثانية                        | Second(s)                   | Time display    |
+| hour             | ساعة                         | Hour                        | Time display    |
+| hours            | ساعتان                       | Two Hours                   | Time display    |
+| hourAndHalf      | ساعة ونصف                    | Hour and Half               | Preset option   |
+| listeningTime    | وقت الاستماع الخاص بك        | Your Listening Time         | Time tracker    |
+| playCount        | مرات التشغيل                 | Play Count                  | Counter label   |
+| suggestion       | لديك اقتراح؟                 | Have a Suggestion?          | Feedback link   |
+| cacheWarning     | البيانات محفوظة في متصفحك... | Data saved in browser...    | Tooltip         |
+| enterNumber      | أدخل رقماً بين 1 و 999       | Enter number between 1-999  | Validation      |
 
 ---
 
 ## 🛠️ Common Modifications Guide
 
 ### To Change Audio Stream
+
 ```html
 <!-- In index.html, update the source: -->
 <source src="YOUR_NEW_STREAM_URL" type="audio/mpeg" />
 ```
 
 ### To Add New Timer Preset
+
 ```html
 <!-- In index.html, add option to sleepTimerSelect: -->
 <option value="180">3 ساعات</option>
 ```
 
 ### To Change Counter Namespace
+
 ```javascript
 // In script.js, update:
 const COUNTER_NAMESPACE = "your-new-namespace";
 ```
 
 ### To Modify Colors
+
 ```css
 /* In styles.css, search and replace color values */
 /* Primary gold: #ffb347 */
@@ -492,21 +526,23 @@ const COUNTER_NAMESPACE = "your-new-namespace";
 ```
 
 ### To Add New Status Message
+
 ```javascript
 // In script.js, set statusText:
 statusText.textContent = "رسالتك الجديدة";
 // Optionally toggle statusDot:
-statusDot.classList.add("offline");    // Gray
+statusDot.classList.add("offline"); // Gray
 statusDot.classList.remove("offline"); // Gold pulsing
 ```
 
 ### To Add New Background Image
+
 ```javascript
 // In script.js, add to backgrounds array:
 const backgrounds = [
   // ... existing backgrounds
-  "your-new-image.jpg",  // local file
-  "https://example.com/image.gif",  // external URL
+  "your-new-image.jpg", // local file
+  "https://example.com/image.gif", // external URL
 ];
 ```
 
@@ -557,7 +593,7 @@ const backgrounds = [
 _Last Updated: January 4, 2026_
 _Total Lines: ~1400+ across all files_
 | Connection Failed | فشل الاتصال - حاول مرة أخرى | Connection Failed - Try Again |
-| Connection Error  | خطأ في الاتصال              | Connection Error              |
+| Connection Error | خطأ في الاتصال | Connection Error |
 
 ---
 
@@ -589,35 +625,35 @@ _Total Lines: ~1400+ across all files_
 
 ## 📊 Summary Statistics
 
-| Metric                | Value                                       |
-| --------------------- | ------------------------------------------- |
-| Total Files           | 6 (3 code + 2 images + 1 docs)              |
-| HTML Lines            | ~165                                        |
-| JavaScript Lines      | ~420                                        |
-| CSS Lines             | ~775                                        |
+| Metric                | Value                                                   |
+| --------------------- | ------------------------------------------------------- |
+| Total Files           | 6 (3 code + 2 images + 1 docs)                          |
+| HTML Lines            | ~165                                                    |
+| JavaScript Lines      | ~420                                                    |
+| CSS Lines             | ~775                                                    |
 | External Dependencies | 4 (Google Fonts, RadioJar, CounterAPI, External Images) |
-| Breakpoints           | 3 (default, 768px, 400px)                   |
-| Animations            | 2 (pulse, slideUp)                          |
-| Background Options    | 10                                          |
+| Breakpoints           | 3 (default, 768px, 400px)                               |
+| Animations            | 2 (pulse, slideUp)                                      |
+| Background Options    | 10                                                      |
 
 ---
 
 ## 🔑 Key localStorage Keys
 
-| Key                 | Purpose                        |
-| ------------------- | ------------------------------ |
-| `totalListeningTime`| Total seconds listened         |
-| `radioPlayCount`    | Fallback counter if API fails  |
+| Key                  | Purpose                       |
+| -------------------- | ----------------------------- |
+| `totalListeningTime` | Total seconds listened        |
+| `radioPlayCount`     | Fallback counter if API fails |
 
 ---
 
 ## 🌐 External APIs
 
-| Service       | Endpoint                                              | Purpose           |
-| ------------- | ----------------------------------------------------- | ----------------- |
-| RadioJar      | `stream.radiojar.com/8s5u5tpdtwzuv`                   | Audio stream      |
-| Google Fonts  | `fonts.googleapis.com`                                | Amiri & Cairo     |
-| CounterAPI    | `counterapi.dev/api/quran-radio-fm-esmaill/fm-plays/` | Global play count |
+| Service      | Endpoint                                              | Purpose           |
+| ------------ | ----------------------------------------------------- | ----------------- |
+| RadioJar     | `stream.radiojar.com/8s5u5tpdtwzuv`                   | Audio stream      |
+| Google Fonts | `fonts.googleapis.com`                                | Amiri & Cairo     |
+| CounterAPI   | `counterapi.dev/api/quran-radio-fm-esmaill/fm-plays/` | Global play count |
 
 ---
 
