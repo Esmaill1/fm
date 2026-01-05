@@ -13,13 +13,51 @@ body {
 
 /* Animations */
 @keyframes pulse {
-  0%,
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 179, 71, 0.4);
+    transform: scale(0.95);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 179, 71, 0);
+    transform: scale(1);
+  }
   100% {
+    box-shadow: 0 0 0 0 rgba(255, 179, 71, 0);
+    transform: scale(0.95);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
     opacity: 1;
   }
-  50% {
-    opacity: 0.5;
-  }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes glow {
+  0% { text-shadow: 0 0 5px rgba(255, 179, 71, 0.2); }
+  50% { text-shadow: 0 0 20px rgba(255, 179, 71, 0.6); }
+  100% { text-shadow: 0 0 5px rgba(255, 179, 71, 0.2); }
+}
+
+@keyframes wave {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.5); opacity: 0; }
 }
 
 body {
@@ -68,6 +106,7 @@ body::before {
 .logo {
   text-align: center;
   margin-bottom: 15px;
+  animation: slideInUp 0.8s ease backwards;
 }
 
 .logo h1 {
@@ -78,6 +117,12 @@ body::before {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  transition: all 0.3s ease;
+}
+
+.logo:hover h1 {
+  text-shadow: 0 0 15px rgba(255, 179, 71, 0.4);
+  filter: drop-shadow(0 0 5px rgba(255, 179, 71, 0.4));
 }
 
 .logo span {
@@ -89,6 +134,7 @@ body::before {
 .status {
   text-align: center;
   margin-bottom: 15px;
+  animation: slideInUp 0.8s ease 0.1s backwards;
 }
 
 .status-indicator {
@@ -121,6 +167,7 @@ body::before {
   align-items: center;
   gap: 15px;
   margin-bottom: 15px;
+  animation: slideInUp 0.8s ease 0.2s backwards;
 }
 
 .play-btn {
@@ -135,6 +182,26 @@ body::before {
   align-items: center;
   transition: all 0.2s ease;
   box-shadow: 0 8px 20px rgba(255, 140, 66, 0.4);
+  position: relative;
+  z-index: 10;
+}
+
+.play-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(255, 179, 71, 0.6);
+  z-index: -1;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.play-btn.playing::after {
+  animation: wave 2s infinite;
 }
 
 .play-btn:hover {
@@ -180,6 +247,7 @@ body::before {
   align-items: center;
   gap: 10px;
   direction: ltr;
+  animation: slideInUp 0.8s ease 0.3s backwards;
 }
 
 .volume-icon {
@@ -217,6 +285,11 @@ body::before {
   background: #ffb347;
   border-radius: 50%;
   cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.volume-slider:hover::-webkit-slider-thumb {
+  transform: scale(1.3);
 }
 
 .volume-slider::-moz-range-thumb {
@@ -226,6 +299,11 @@ body::before {
   border-radius: 50%;
   cursor: pointer;
   border: none;
+  transition: transform 0.2s ease;
+}
+
+.volume-slider:hover::-moz-range-thumb {
+  transform: scale(1.3);
 }
 
 /* Play Counter - Bottom Left */
@@ -267,6 +345,7 @@ body::before {
   color: rgba(255, 255, 255, 0.5);
   margin-top: 8px;
   text-align: center;
+  animation: slideInUp 0.8s ease 0.4s backwards;
 }
 
 .listening-time svg {
@@ -296,6 +375,7 @@ body::before {
   outline: none;
   transition: all 0.2s ease;
   white-space: nowrap;
+  animation: slideInUp 0.8s ease 0.5s backwards;
 }
 
 .set-timer-btn:hover {
@@ -330,6 +410,7 @@ body::before {
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  animation: fadeIn 0.3s ease;
 }
 
 .timer-modal-content {
@@ -562,6 +643,7 @@ body::before {
   transition: all 0.3s ease;
   text-align: center;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  animation: slideInUp 0.8s ease 0.6s backwards;
 }
 
 .suggestions-btn:hover {
