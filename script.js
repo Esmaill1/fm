@@ -7,8 +7,8 @@ const backgrounds = [
   "https://i.pinimg.com/originals/9f/42/2b/9f422b3823bc356e0e801f2504452c4c.gif",
   "https://i.pinimg.com/originals/a7/1c/ed/a71ced878e41e9296321504f39e1389f.gif",
   "https://i.pinimg.com/originals/1c/98/33/1c983310d3e6765916c63294e4b99de4.gif",
-  "cozy-home-interior-anime-style.jpg",
   "wp11702872-cozy-lofi-wallpapers.jpg",
+  "download.gif"
 ];
 
 // Function to set background with error handling
